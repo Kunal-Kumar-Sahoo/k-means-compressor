@@ -23,21 +23,7 @@ class WebApp:
             self.__compressor = ImageCompressor(__num_colors)
             __compressed_image = self.__compressor.compress_image(Image)
             st.image(__compressed_image, caption='Compressed Image', use_column_width=True)
-        
-            __download_button = st.button('Download')
-            if __download_button:
-                self.__download_compressed_image(__compressed_image)
     
-    @staticmethod
-    def __download_compressed_image(image):
-        __compressed_pil_image = Image.fromarray((image * 255).astype(np.uint8))
-        __temp = 'compressed_image.png'
-        __compressed_pil_image.save(__temp)
-        
-        with open(__temp, 'rb') as __image:
-            __data = __image.read()
-            __b64_image = base64.b64encode(__data).decode('utf-8')
-            st.markdown(f"Download your compressed image [here](data:file/png;base64,{__b64_image})", unsafe_allow_html=True)
 
 def main():
     app = WebApp()
